@@ -1,12 +1,10 @@
 #!/usr/bin/perl
 
 sub getMoviesFromDir {
-	#local $| = 1;
 	my $fromDir = shift;
-	#my $totalMovies = `ls -1 "$fromDir" | wc -l`;
-	#$totalMovies =~ /(\d+)/;
-	#print "Processing $1 movies...";
-	my @moviesAtDir = `./GetMovies.sh "$fromDir"`;
+	
+	my @moviesAtDir = `ls "$fromDir"/*/*`;
+
 	my @movies = ();
 	foreach $movie (@moviesAtDir) {
 		$movie =~ /.*\/(.*)/;
@@ -25,6 +23,7 @@ sub getMoviesDB {
 
 	my @movies = getMoviesFromDir "$originalDir";
 	push( @{ $moviesDB{$_} }, (1, 0)) foreach (@movies);
+	#print "$_\n" foreach (@movies);
 
 	@movies = getMoviesFromDir "$backupDir";
 	foreach (@movies) {
@@ -42,7 +41,9 @@ sub getMoviesFromDB {
 	my ($v1, $v2, %moviesDB) = @_;
 	my @moviesFromDB = ();
 	
-	push( @moviesFromDB, $_ ) if ($moviesDB{$_}->[0] == $v1 and $moviesDB{$_}->[1] == $v2) foreach ( keys %moviesDB )
+	foreach ( keys %moviesDB ) { 
+		push( @moviesFromDB, $_ ) if ($moviesDB{$_}->[0] == $v1 and $moviesDB{$_}->[1] == $v2) 
+	} 
 	
 	return @moviesFromDB;
 }
