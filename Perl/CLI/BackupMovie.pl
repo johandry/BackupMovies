@@ -58,8 +58,29 @@ my %moviesDB = getMoviesDB($iTunesDir, $backupDir);
 my @moviesToBackup = getMoviesToBackup(%moviesDB);
 my @moviesFromBackup = getMoviesFromBackup(%moviesDB);
 
-print "Movies to Backup:\n";
-print "$_\n" for (@moviesToBackup);
+if (@moviesToBackup) {
+	print "Movies to Backup:\n";
+	print "$_\n" for (@moviesToBackup);
+}
 
-print "Movies from Backup:\n";
-print "$_\n" for (@moviesFromBackup);
+if (@moviesFromBackup) {
+	print "Movies from Backup:\n";
+	print "$_\n" for (@moviesFromBackup);
+}
+
+$iTunesDir="/Volumes/My Book/Shared iTunes/iTunes Media/TV Shows";
+$backupDir="/Volumes/Public/Shared Videos/TV Shows";
+
+my %moviesDB = getMoviesDB($iTunesDir, $backupDir);
+my @moviesToBackup = getMoviesToBackup(%moviesDB);
+my @moviesFromBackup = getMoviesFromBackup(%moviesDB);
+
+if (@moviesToBackup) {
+	print "TVShows to Backup:\n";
+	print "$_\n" for (@moviesToBackup);
+}
+
+if (@moviesFromBackup) {
+	print "TVShows from Backup:\n";
+	print "$_\n" for (@moviesFromBackup);
+}
